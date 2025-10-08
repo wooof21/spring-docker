@@ -1,0 +1,12 @@
+# run container: docker-compose up
+# docker-compose up -d: detached mode (background)
+# remove container & network: docker-compose down
+version: "3.0" # docker-compose version
+
+services: # a list of containers to run together
+  simple-nginx: # service name (!= container name)
+    #build: . # to build from local Dockerfile
+    image: nginx # to build from docker nginx image
+    #container-name: simple-nginx # container name, default name = <directory>-<service name>-<index>
+    ports:
+      - "80:80"

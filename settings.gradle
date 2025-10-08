@@ -1,0 +1,3 @@
+rootProject.name = 'spring-docker'
+include 'application:job-service'
+include 'application:candidate-service'

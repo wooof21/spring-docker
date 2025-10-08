@@ -1,0 +1,28 @@
+
+
+version: "3.0"
+services:
+  mongo-db:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+#      - ./data:/data/db # persist container mongo records(/data/db) in ./data directory
+      # run a script to initialize the mongo at start
+      - ./static:/docker-entrypoint-initdb.d
+  # mongo express UI creds: admin & pass -> http://0.0.0.0:8081
+  mongo-express:
+    image: mongo-express
+    # depends_on ONLY guarantee mongo-express start after mongo-db, but mongo-db may have some
+    # initialization that take time after start, and mongo-express start very fast and try to
+    # connect to mongo, it may fail and exit -> add `restart` to retry connection
+    depends_on:
+      - mongo-db
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+      ME_CONFIG_MONGODB_SERVER: mongo-db

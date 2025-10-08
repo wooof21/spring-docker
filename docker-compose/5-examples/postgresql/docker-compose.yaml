@@ -1,0 +1,17 @@
+
+
+version: "3.0"
+services:
+  postgres-ql:
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: product_db
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+  # UI: localhost:8080 - server: postgres-ql
+  postgres-adminer:
+    image: adminer
+    ports:
+      - "8080:8080"

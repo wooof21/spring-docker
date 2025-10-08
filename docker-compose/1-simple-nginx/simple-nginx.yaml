@@ -1,0 +1,11 @@
+# docker-compose up: by default, it looks for docker-compose.yaml file
+# when save with different name: docker-compose -f simple-nginx up
+version: "3.0" # docker-compose version
+
+services: # a list of containers to run together
+  simple-nginx: # service name (!= container name)
+    #build: . # to build from local Dockerfile
+    image: nginx # to build from docker nginx image
+    #container-name: simple-nginx # container name, default name = <directory>-<service name>-<index>
+    ports:
+      - "80:80"

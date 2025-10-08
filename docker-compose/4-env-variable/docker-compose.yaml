@@ -1,0 +1,13 @@
+
+version: "3.0"
+services:
+  ubuntu:
+    image: ubuntu
+    command: "env"
+    env_file: # passing env variables in a list of env file
+      - app.env
+      - service.env
+    environment: # passing env variables as list
+      - app.name=service1
+      - service.url=google.com
+      - input=35

@@ -1,0 +1,16 @@
+
+# to pass TAG env when run: docker-compose up
+# mac:
+# export TAG=perl
+# docker-compose -f env-placeholder.yaml up
+# windows:
+# $env:TAG="perl"
+# docker-compose -f env-placeholder.yaml up
+# or use env file
+
+version: "3.0"
+services:
+  web-app:
+    image: nginx:${TAG:-latest} # :- -> default value
+    ports:
+      - "80:80"
