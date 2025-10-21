@@ -6,10 +6,10 @@
 # to pull gralde image for build the project
 FROM gradle:8.13-jdk21-corretto AS BUILDER
 
-WORKDIR /gradle/app
+WORKDIR /gradle/app1
 
-COPY job-service/build.gradle .
-COPY job-service/src ./src
+COPY build.gradle .
+COPY src ./src
 
 # Build the JAR (skip tests for faster build)
 RUN gradle clean build -x test
@@ -23,8 +23,8 @@ WORKDIR /usr/share/app
 
 # relative path to the JAR
 #COPY job-service/build/libs/*.jar app.jar
-COPY --from=BUILDER /gradle/app/build/libs/*.jar app.jar
+COPY --from=BUILDER /gradle/app1/build/libs/*.jar job-app.jar
 
 EXPOSE 8080
 
-CMD [ "java", "-jar", "app.jar" ]
+CMD [ "java", "-jar", "job-app.jar" ]

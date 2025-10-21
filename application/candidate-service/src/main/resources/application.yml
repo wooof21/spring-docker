@@ -1,0 +1,16 @@
+
+spring:
+  data:
+    mongodb:
+      host: ${MONGODB_CANDIDATE_HOST:localhost}
+      port: ${MONGODB_CANDIDATE_PORT:27017}
+      username: ${MONGODB_CANDIDATE_USERNAME:usr1}
+      password: ${MONGODB_CANDIDATE_PASSWORD:pwd1}
+      database: ${MONGODB_CANDIDATE_NAME:candidate}
+
+server:
+  port: 8081
+
+job:
+  service:
+    url: ${JOB_SERVICE_BASE_URL:http\://localhost\:1080}

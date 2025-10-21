@@ -10,25 +10,56 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./job-service/src/test/resources/static:/docker-entrypoint-initdb.d
+      - ./mongo-init:/docker-entrypoint-initdb.d
   job-service:
     build:
-      context: .
-      dockerfile: job-service/src/main/resources/Dockerfile
+      context: ./job-service
+      dockerfile: src/main/resources/Dockerfile
     image: job-service
-    container_name: job-service
     depends_on:
       - mongo-db
     ports:
       - "8080:8080"
     environment:
-      MONGO_DB_HOST: mongo-db
-      MONGO_DB_PORT: 27017
-      MONGO_DB_USERNAME: usr1
-      MONGO_DB_PASSWORD: pwd1
-      MONGO_DB_NAME: job
+      MONGODB_JOB_HOST: mongo-db
+      MONGODB_JOB_PORT: 27017
+      MONGODB_JOB_USERNAME: usr1
+      MONGODB_JOB_PASSWORD: pwd1
+      MONGODB_JOB_NAME: job
     # with profile -> docker-compose up -> only mongo-db will be running
     # to run both: docker-compose --profile=test up
     # useful when have different dbs
 #    profiles:
 #      - test
+
+
+  # mock job server for candidate-service to interact and set candidate's recommended jobs
+  # curl http://localhost:8081/candidate/1
+  # candidate id = 1, with skills = java,spring
+  # make the recommended jobs call to mock server and append the recommended jobs
+  mock-server-job:
+    image: mockserver/mockserver
+    ports:
+      - "1080:1080"
+    environment:
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/config.json
+    volumes:
+      - "./mock-server/job-data/job-mock.json:/config/config.json"
+
+
+  candidate-service:
+    build:
+      context: ./candidate-service
+      dockerfile: src/main/resources/Dockerfile
+    image: candidate-service
+    depends_on:
+      - mongo-db
+    ports:
+      - "8081:8081"
+    environment:
+      MONGODB_CANDIDATE_HOST: mongo-db
+      MONGODB_CANDIDATE_PORT: 27017
+      MONGODB_CANDIDATE_USERNAME: usr1
+      MONGODB_CANDIDATE_PASSWORD: pwd1
+      MONGODB_CANDIDATE_NAME: candidate
+      JOB_SERVICE_BASE_URL: http://mock-server-job:1080/job

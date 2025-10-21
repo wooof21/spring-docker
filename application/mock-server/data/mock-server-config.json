@@ -1,0 +1,54 @@
+[
+    {
+        "httpRequest":{
+            "path": "/say/hello",
+            "method": "GET"
+        },
+        "httpResponse":{
+            "statusCode": 200,
+            "body": "Hello world"
+        }
+    },
+    {
+        "httpRequest":{
+            "path": "/some/path"
+        },
+        "httpResponse":{
+            "body": {
+                "type": "json",
+                "msg": "Some msg"
+            }
+        }
+    },
+    {
+        "httpRequest":{
+            "path": "/any/.*"
+        },
+        "httpResponse":{
+            "body": {
+                "msg": "regex matched"
+            }
+        }
+    } ,
+    {
+        "httpRequest":{
+            "path": "/query",
+            "queryStringParameters":{
+                "q": ["docker"]
+            }
+        },
+        "httpResponse":{
+            "body": {
+                "msg": "query params"
+            }
+        }
+    }  ,
+    {
+        "httpRequest":{
+            "path": "/error/500"
+        },
+        "httpResponse":{
+            "statusCode": 500
+        }
+    }
+]

@@ -2,8 +2,8 @@
 spring:
   data:
     mongodb:
-      host: ${MONGO_DB_HOST:localhost}
-      port: ${MONGO_DB_PORT:27017}
-      username: ${MONGO_DB_USERNAME:usr1}
-      password: ${MONGO_DB_PASSWORD:pwd1}
-      database: ${MONGO_DB_NAME:job}
+      host: ${MONGODB_JOB_HOST:localhost}
+      port: ${MONGODB_JOB_PORT:27017}
+      username: ${MONGODB_JOB_USERNAME:usr1}
+      password: ${MONGODB_JOB_PASSWORD:pwd1}
+      database: ${MONGODB_JOB_NAME:job}

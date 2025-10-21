@@ -1,0 +1,14 @@
+
+# https://hub.docker.com/r/mockserver/mockserver
+# https://mock-server.com/mock_server/running_mock_server.html
+
+version: "3.0"
+services:
+  mock-server:
+    image: mockserver/mockserver
+    ports:
+      - "1080:1080"
+    environment:
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/config.json
+    volumes:
+      - "./data/mock-server-config.json:/config/config.json"
