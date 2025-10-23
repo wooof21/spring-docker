@@ -13,4 +13,4 @@ server:
 
 job:
   service:
-    url: ${JOB_SERVICE_BASE_URL:http\://localhost\:1080}
+    url: ${JOB_SERVICE_BASE_URL:http\://localhost\:1080/job}

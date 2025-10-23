@@ -6,9 +6,10 @@ version: "3.0"
 services:
   mongo-db:
     image: mongo
-    container_name: mongo-db
+    # container_name is not supported by Test Container
+#    container_name: mongo-db
     ports:
-      - "27017:27017"
+      - "${MONGO_HOST_PORT:-27017}:27017"
     volumes:
       - ./mongo-init:/docker-entrypoint-initdb.d
   job-service:
@@ -40,7 +41,7 @@ services:
   mock-server-job:
     image: mockserver/mockserver
     ports:
-      - "1080:1080"
+      - "${MOCK_SERVER_JOB_PORT:-1080}:1080"
     environment:
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/config.json
     volumes:
